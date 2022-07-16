@@ -2,6 +2,8 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 const fs = require("fs");
 
+// Deploed to goerli 0xFE38C779d421C3Cbd7427bD072f71d25B02CE034
+
 async function main() {
   const [deployer] = await ethers.getSigners();
   const balance = await deployer.getBalance();
@@ -10,13 +12,15 @@ async function main() {
 
   await marketplace.deployed();
 
+  console.log("NFTMarketplace deployed to:", marketplace.address);
+
   const data = {
     address: marketplace.address,
-    abi: JSON.parse(marketplace.interface.format('json'))
-  }
+    abi: JSON.parse(marketplace.interface.format("json")),
+  };
 
   //This writes the ABI and address to the mktplace.json
-  fs.writeFileSync('./src/Marketplace.json', JSON.stringify(data))
+  fs.writeFileSync("./src/Marketplace.json", JSON.stringify(data));
 }
 
 main()
